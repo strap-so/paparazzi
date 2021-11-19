@@ -31,6 +31,7 @@ import app.cash.paparazzi.accessibility.RenderSettings.DEFAULT_TEXT_SIZE
 import app.cash.paparazzi.accessibility.RenderSettings.getColor
 import app.cash.paparazzi.accessibility.RenderSettings.toColorInt
 import app.cash.paparazzi.accessibility.RenderSettings.withAlpha
+import java.awt.image.BufferedImage
 
 class AccessibilityRenderExtension : RenderExtension {
 
@@ -96,6 +97,8 @@ class AccessibilityRenderExtension : RenderExtension {
 
     return accessibilityViews
   }
+
+  override fun renderImage(contentView: View, generatedImage: BufferedImage): BufferedImage = generatedImage
 
   private fun buildAccessibilityView(contentView: View): View {
     val linearLayout = LinearLayout(contentView.context).apply {
