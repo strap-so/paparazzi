@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?selectableItemBackgroundRippleBorder"
+    >
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/container"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:minHeight="88dp"
+      >
+
+    <Button
+        android:id="@+id/inline_alternate_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/activity_inline_button_stroke"
+        android:gravity="center"
+        android:minHeight="32dp"
+        android:paddingBottom="8dp"
+        android:paddingEnd="12dp"
+        android:paddingStart="12dp"
+        android:paddingTop="8dp"
+        android:textAppearance="@style/TextAppearance.Cash.Badge"
+        android:textColor="@color/bright_green_normal"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/right"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="ACCEPT"
+        />
+
+    <ImageView
+        android:id="@+id/unread"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:importantForAccessibility="no"
+        android:src="@drawable/activity_unread_badge"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible"
+        />
+
+    <ImageView
+        android:id="@+id/badge_icon"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="@dimen/badge_gap_activity_subtitle"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/title"
+        app:layout_constraintEnd_toStartOf="@+id/right_barrier"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/title"
+        app:layout_constraintTop_toTopOf="@+id/title"
+        tools:src="@drawable/badge_verified_customer"
+        tools:visibility="visible"
+        />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        android:layout_marginStart="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.Cash.Cell.Medium"
+        android:textSize="@dimen/payment_view_tab_title_text_size"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toTopOf="@+id/animating_subtitle"
+        app:layout_constraintEnd_toStartOf="@+id/right_barrier"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/avatar_badge"
+        app:layout_constraintTop_toTopOf="@+id/top"
+        app:layout_goneMarginStart="0dp"
+        tools:text="Susie Reese"
+        />
+
+    <TextView
+        android:id="@+id/subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.Cash.Subtext"
+        android:textColor="?android:textColorSecondary"
+        android:textSize="@dimen/payment_view_tab_subtitle_text_size"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toTopOf="@+id/bottom"
+        app:layout_constraintEnd_toStartOf="@+id/right_barrier"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/title"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        tools:text="Sent you $10"
+        />
+
+    <TextView
+        android:id="@+id/amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.Cash.Cell.Medium"
+        android:textSize="@dimen/payment_view_tab_amount_text_size"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@+id/right"
+        app:layout_constraintTop_toTopOf="@+id/top"
+        tools:text="$120.00"
+        tools:visibility="visible"
+        />
+
+    <View
+        android:id="@+id/right_barrier"
+        android:layout_width="16dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/right_barrier_without_margin"
+        app:layout_constraintEnd_toEndOf="@+id/right_barrier_without_margin"
+        app:layout_constraintTop_toTopOf="@+id/right_barrier_without_margin"
+        />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/right_barrier_without_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="start"
+        app:constraint_referenced_ids="amount,inline_pay_button,inline_alternate_button,inline_optional_button,inline_loading_indicator,inline_optional_reaction_button"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/activity_item_padding_sides_tab"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/activity_item_padding_sides_tab"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/optional_button_right_align"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/activity_item_option_button_end_tab"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/optional_button_top_align"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="14dp"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="24dp"
+        />
+
+    <com.squareup.cash.history.views.SlideUpAnimatedTextView
+        android:id="@+id/animating_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.Cash.Subtext"
+        android:textSize="@dimen/payment_view_tab_subtitle_text_size"
+        android:visibility="gone"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toTopOf="@+id/bottom"
+        app:layout_constraintEnd_toStartOf="@+id/right_barrier"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/title"
+        tools:text="Sent you $10"
+        />
+
+    <com.squareup.cash.mooncake.components.MooncakePrimaryButton
+        android:id="@+id/inline_pay_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/right"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Pay"
+        />
+
+    <com.squareup.cash.ui.widget.BadgedLayout
+        android:id="@+id/avatar_badge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/left"
+        app:layout_constraintTop_toTopOf="parent"
+        style="?badgedAvatarSmallStyle"
+        >
+
+      <com.squareup.cash.ui.widget.StackedAvatarView
+          android:id="@+id/stacked_avatar"
+          android:layout_width="40dp"
+          android:layout_height="40dp"
+          app:avatarSize="small"
+          />
+    </com.squareup.cash.ui.widget.BadgedLayout>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
