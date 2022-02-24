@@ -31,8 +31,8 @@ import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams
 import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.ComposeView
+//import androidx.compose.runtime.Composable
+//import androidx.compose.ui.platform.ComposeView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
@@ -177,23 +177,23 @@ class Paparazzi @JvmOverloads constructor(
 
   fun <V : View> inflate(@LayoutRes layoutId: Int): V = layoutInflater.inflate(layoutId, null) as V
 
-  fun snapshot(
-    name: String? = null,
-    deviceConfig: DeviceConfig? = null,
-    theme: String? = null,
-    renderingMode: RenderingMode? = null,
-    composable: @Composable () -> Unit
-  ) {
-    val hostView = ComposeView(context)
-    // During onAttachedToWindow, AbstractComposeView will attempt to resolve its parent's
-    // CompositionContext, which requires first finding the "content view", then using that to
-    // find a root view with a ViewTreeLifecycleOwner
-    val parent = FrameLayout(context).apply { id = android.R.id.content }
-    parent.addView(hostView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
-    PaparazziComposeOwner.register(parent)
-    hostView.setContent(composable)
-    snapshot(parent, name, deviceConfig, theme, renderingMode)
-  }
+//  fun snapshot(
+//    name: String? = null,
+//    deviceConfig: DeviceConfig? = null,
+//    theme: String? = null,
+//    renderingMode: RenderingMode? = null,
+//    composable: @Composable () -> Unit
+//  ) {
+//    val hostView = ComposeView(context)
+//    // During onAttachedToWindow, AbstractComposeView will attempt to resolve its parent's
+//    // CompositionContext, which requires first finding the "content view", then using that to
+//    // find a root view with a ViewTreeLifecycleOwner
+//    val parent = FrameLayout(context).apply { id = android.R.id.content }
+//    parent.addView(hostView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+//    PaparazziComposeOwner.register(parent)
+//    hostView.setContent(composable)
+//    snapshot(parent, name, deviceConfig, theme, renderingMode)
+//  }
 
   @JvmOverloads
   fun snapshot(

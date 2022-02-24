@@ -79,7 +79,7 @@ buildscript {
     mavenCentral()
     google()
     gradlePluginPortal()
-    //mavenLocal()
+    mavenLocal()
   }
 
   dependencies {
@@ -166,9 +166,9 @@ tasks.register("clean", Delete).configure {
   delete rootProject.buildDir
 }
 
-tasks.named("wrapper").configure {
-  distributionType = Wrapper.DistributionType.ALL
-}
+//tasks.named("wrapper").configure {
+//  distributionType = Wrapper.DistributionType.ALL
+//}
 
 allprojects { project ->
   tasks.register("mavenLocalize").configure { task ->

@@ -71,7 +71,8 @@ class PaparazziPlugin : Plugin<Project> {
         project.tasks.named("merge${variantSlug}Assets") as TaskProvider<MergeSourceSetFolders>
       val mergeAssetsOutputDir = mergeAssetsProvider.flatMap { it.outputDir }
       val reportOutputDir = project.layout.buildDirectory.dir("reports/paparazzi")
-      val snapshotOutputDir = project.layout.projectDirectory.dir("src/test/snapshots")
+
+      var snapshotOutputDir = project.layout.projectDirectory.dir(".strapp/snaps/android")
 
       val packageAwareArtifacts = project.configurations.getByName("${variant.name}RuntimeClasspath")
         .incoming
