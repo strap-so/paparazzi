@@ -396,7 +396,7 @@ class Paparazzi @JvmOverloads constructor(
           throw e
         }
       }
-    modifiersField.isAccessible = true
+//    modifiersField.isAccessible = true
 
     val versionClass = try {
       Paparazzi::class.java.classLoader.loadClass("android.os.Build\$VERSION")
@@ -407,9 +407,9 @@ class Paparazzi @JvmOverloads constructor(
     versionClass
         .getDeclaredField("SDK_INT")
         .apply {
-          isAccessible = true
-          modifiersField.setInt(this, modifiers and Modifier.FINAL.inv())
-          setInt(null, compileSdkVersion)
+//          isAccessible = true
+//          modifiersField.setInt(this, modifiers and Modifier.FINAL.inv())
+//          setInt(null, compileSdkVersion)
         }
   }
 

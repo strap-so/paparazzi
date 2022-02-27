@@ -64,7 +64,7 @@ internal class PaparazziCallback(
         val resourceType = ResourceType.fromClassName(resourceClass.simpleName) ?: continue
 
         for (field in resourceClass.declaredFields) {
-          if (!Modifier.isStatic(field.modifiers)) continue
+//          if (!Modifier.isStatic(field.modifiers)) continue
 
           // May not be final in library projects.
           val type = field.type
