@@ -43,7 +43,6 @@ import java.util.Locale
 
 @Suppress("unused")
 class PaparazziPlugin : Plugin<Project> {
-  @OptIn(ExperimentalStdlibApi::class)
   override fun apply(project: Project) {
     project.afterEvaluate {
       require(project.plugins.hasPlugin("com.android.library")) {
@@ -71,7 +70,8 @@ class PaparazziPlugin : Plugin<Project> {
         project.tasks.named("merge${variantSlug}Assets") as TaskProvider<MergeSourceSetFolders>
       val mergeAssetsOutputDir = mergeAssetsProvider.flatMap { it.outputDir }
       val reportOutputDir = project.layout.buildDirectory.dir("reports/paparazzi")
-      val snapshotOutputDir = project.layout.projectDirectory.dir("src/test/snapshots")
+      val snapshotOutputDir = project.rootProject.rootDir.resolve(".strapp/snapshots")
+      snapshotOutputDir.mkdirs()//project.layout.projectDirectory.dir("src/test/snapshots")
 
       val packageAwareArtifacts = project.configurations.getByName("${variant.name}RuntimeClasspath")
         .incoming
@@ -146,6 +146,7 @@ class PaparazziPlugin : Plugin<Project> {
           override fun execute(t: Task) {
             test.systemProperties["paparazzi.test.record"] = isRecordRun.get()
             test.systemProperties["paparazzi.test.verify"] = isVerifyRun.get()
+            test.systemProperties["paparazzi.test.rootDirectory"] = project.rootProject.rootDir.absolutePath + "/.strapp/snapshots/android"
             test.systemProperties.putAll(paparazziProperties)
           }
         })
@@ -211,7 +212,11 @@ class PaparazziPlugin : Plugin<Project> {
   }
 
   private fun BaseExtension.packageName(): String {
+    namespace?.let { return it }
+
+    // TODO: explore whether AGP 7.x APIs can handle source set filtering
     sourceSets
+      .filterNot { it.name.startsWith("androidTest") }
       .map { it.manifest.srcFile }
       .filter { it.exists() }
       .forEach {
@@ -230,4 +235,4 @@ class PaparazziPlugin : Plugin<Project> {
   }
 }
 
-private const val DEFAULT_COMPILE_SDK_VERSION = 30
+private const val DEFAULT_COMPILE_SDK_VERSION = 31

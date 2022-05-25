@@ -26,8 +26,8 @@ dependencies {
 dependencies {
   // Paparazzi is a Kotlin JVM module and thus cannot depend on Android library artifacts (AARs)
   // TODO: Use Gradle transforms to extract/rename classes.jar's from AARs
-  api files('libs/compose-runtime-1.0.5.jar')
-  compileOnly files('libs/compose-ui-1.0.5.jar')
+  api files('libs/compose-runtime-1.1.1.jar')
+  compileOnly files('libs/compose-ui-1.1.1.jar')
   compileOnly deps.androidx.lifecycleCommon
   compileOnly files('libs/lifecycle-runtime-2.4.0.jar')
   compileOnly files('libs/savedstate-1.1.0.jar')
@@ -35,6 +35,7 @@ dependencies {
   api deps.layoutlib.native.jdk11
   api deps.tools.common
   api deps.tools.layoutlib
+  api deps.tools.ninepatch
   api deps.tools.sdkcommon
   api deps.kxml2
   api deps.junit
@@ -48,7 +49,7 @@ dependencies {
   kapt deps.moshi.kotlinCodegen
   implementation deps.jcodec.core
   implementation deps.jcodec.javase
-  implementation project(':paparazzi-agent')
+  implementation project(":paparazzi:paparazzi-agent")
 
   def osName = System.getProperty("os.name").toLowerCase(Locale.US)
   if (osName.startsWith("mac")) {
@@ -94,8 +95,8 @@ def generateTestConfig = tasks.register("generateTestConfig") {
     configFile.withWriter('utf-8') { writer ->
       writer.writeLine("app.cash.paparazzi")
       writer.writeLine(".")
-      writer.writeLine("30")
-      writer.writeLine("platforms/android-30/")
+      writer.writeLine("31")
+      writer.writeLine("platforms/android-31/")
       writer.writeLine(".")
       writer.writeLine(configurations.unzip.singleFile.path)
       writer.writeLine("app.cash.paparazzi")

@@ -47,6 +47,34 @@ class PaparazziPluginTest {
   }
 
   @Test
+  fun excludeAndroidTestSourceSets() {
+    val fixtureRoot = File("src/test/projects/exclude-androidtest")
+
+    val result = gradleRunner
+        .withArguments("preparePaparazziDebugResources", "--stacktrace")
+        .runFixture(fixtureRoot) { build() }
+
+    assertThat(result.task(":preparePaparazziDebugResources")).isNotNull()
+  }
+
+  @Test
+  fun preferDslNamespaceOverManifestPackageDeclaration() {
+    val fixtureRoot = File("src/test/projects/prefer-dsl-namespace")
+
+    val result = gradleRunner
+        .withArguments("preparePaparazziDebugResources", "--stacktrace")
+        .runFixture(fixtureRoot) { build() }
+
+    assertThat(result.task(":preparePaparazziDebugResources")).isNotNull()
+
+    val resourcesFile = File(fixtureRoot, "build/intermediates/paparazzi/debug/resources.txt")
+    assertThat(resourcesFile.exists()).isTrue()
+
+    val resourceFileContents = resourcesFile.readLines()
+    assertThat(resourceFileContents[0]).isEqualTo("app.cash.paparazzi.plugin.namespaced")
+  }
+
+  @Test
   fun missingPlatformDirTest() {
     val fixtureRoot = File("src/test/projects/missing-platform-dir")
 
@@ -501,7 +529,7 @@ class PaparazziPluginTest {
     val resourceFileContents = resourcesFile.readLines()
     assertThat(resourceFileContents[0]).isEqualTo("app.cash.paparazzi.plugin.test")
     assertThat(resourceFileContents[1]).isEqualTo("build/intermediates/merged_res/debug")
-    assertThat(resourceFileContents[4]).isEqualTo("build/intermediates/merged_assets/debug/out")
+    assertThat(resourceFileContents[4]).isEqualTo("build/intermediates/assets/debug/mergeDebugAssets")
     assertThat(resourceFileContents[6]).isEqualTo("app.cash.paparazzi.plugin.test")
   }
 
@@ -521,7 +549,7 @@ class PaparazziPluginTest {
     val resourceFileContents = resourcesFile.readLines()
     assertThat(resourceFileContents[0]).isEqualTo("app.cash.paparazzi.plugin.test")
     assertThat(resourceFileContents[1]).isEqualTo("build/intermediates/merged_res/debug")
-    assertThat(resourceFileContents[4]).isEqualTo("build/intermediates/merged_assets/debug/out")
+    assertThat(resourceFileContents[4]).isEqualTo("build/intermediates/assets/debug/mergeDebugAssets")
     assertThat(resourceFileContents[6]).isEqualTo("app.cash.paparazzi.plugin.test")
   }
 
@@ -539,8 +567,8 @@ class PaparazziPluginTest {
     assertThat(resourcesFile.exists()).isTrue()
 
     val resourceFileContents = resourcesFile.readLines()
-    assertThat(resourceFileContents[2]).isEqualTo("30")
-    assertThat(resourceFileContents[3]).isEqualTo("platforms/android-30/")
+    assertThat(resourceFileContents[2]).isEqualTo("31")
+    assertThat(resourceFileContents[3]).isEqualTo("platforms/android-31/")
   }
 
   @Test
@@ -558,7 +586,7 @@ class PaparazziPluginTest {
 
     val resourceFileContents = resourcesFile.readLines()
     assertThat(resourceFileContents[2]).isEqualTo("29")
-    assertThat(resourceFileContents[3]).isEqualTo("platforms/android-30/")
+    assertThat(resourceFileContents[3]).isEqualTo("platforms/android-31/")
   }
 
   @Test
@@ -774,6 +802,23 @@ class PaparazziPluginTest {
   }
 
   @Test
+  fun ninePatch() {
+    val fixtureRoot = File("src/test/projects/nine-patch")
+
+    gradleRunner
+        .withArguments("testDebug", "--stacktrace")
+        .runFixture(fixtureRoot) { build() }
+
+    val snapshotsDir = File(fixtureRoot, "build/reports/paparazzi/images")
+    val snapshots = snapshotsDir.listFiles()
+    assertThat(snapshots!!).hasLength(1)
+
+    val snapshotImage = snapshots[0]
+    val goldenImage = File(fixtureRoot, "src/test/resources/nine_patch.png")
+    assertThat(snapshotImage).isSimilarTo(goldenImage).withDefaultThreshold()
+  }
+
+  @Test
   fun nonTransitiveResources() {
     val fixtureRoot = File("src/test/projects/non-transitive-resources")
     val moduleRoot = File(fixtureRoot, "module")
@@ -816,6 +861,14 @@ class PaparazziPluginTest {
     val snapshotImage = snapshots[0]
     val goldenImage = File(fixtureRoot, "src/test/resources/compose_fonts.png")
     assertThat(snapshotImage).isSimilarTo(goldenImage).withDefaultThreshold()
+  }
+
+  @Test
+  fun immSoftInputInteraction() {
+    val fixtureRoot = File("src/test/projects/imm-soft-input")
+    gradleRunner
+      .withArguments("testDebug", "--stacktrace")
+      .runFixture(fixtureRoot) { build() }
   }
 
   private fun GradleRunner.runFixture(
