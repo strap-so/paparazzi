@@ -70,7 +70,8 @@ class PaparazziPlugin : Plugin<Project> {
         project.tasks.named("merge${variantSlug}Assets") as TaskProvider<MergeSourceSetFolders>
       val mergeAssetsOutputDir = mergeAssetsProvider.flatMap { it.outputDir }
       val reportOutputDir = project.layout.buildDirectory.dir("reports/paparazzi")
-      val snapshotOutputDir = project.layout.projectDirectory.dir("src/test/snapshots")
+      val snapshotOutputDir = project.rootProject.rootDir.resolve(".strapp/snapshots")
+      snapshotOutputDir.mkdirs()//project.layout.projectDirectory.dir("src/test/snapshots")
 
       val packageAwareArtifacts = project.configurations.getByName("${variant.name}RuntimeClasspath")
         .incoming
@@ -145,6 +146,7 @@ class PaparazziPlugin : Plugin<Project> {
           override fun execute(t: Task) {
             test.systemProperties["paparazzi.test.record"] = isRecordRun.get()
             test.systemProperties["paparazzi.test.verify"] = isVerifyRun.get()
+            test.systemProperties["paparazzi.test.rootDirectory"] = project.rootProject.rootDir.absolutePath + "/.strapp/snapshots/android"
             test.systemProperties.putAll(paparazziProperties)
           }
         })

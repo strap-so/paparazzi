@@ -544,7 +544,7 @@ class Paparazzi @JvmOverloads constructor(
 
   private fun registerChoreographerDelegateInterception() {
     val choreographerDelegateClass = Class.forName("android.view.Choreographer_Delegate")
-    InterceptorRegistrar.addMethodInterceptor(
+     InterceptorRegistrar.addMethodInterceptor(
         choreographerDelegateClass, "getFrameTimeNanos", ChoreographerDelegateInterceptor::class.java
     )
   }
