@@ -180,7 +180,7 @@ class PaparazziPlugin : Plugin<Project> {
 
   private fun Project.setupPlatformDataTransform(): Configuration {
     configurations.getByName("testImplementation").dependencies.add(
-        dependencies.create("app.cash.paparazzi:paparazzi:$VERSION")
+        dependencies.create(project(":paparazzi:paparazzi"))
     )
 
     val unzipConfiguration = configurations.create("unzip")
