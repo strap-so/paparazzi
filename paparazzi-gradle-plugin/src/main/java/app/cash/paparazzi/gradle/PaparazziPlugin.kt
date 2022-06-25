@@ -185,9 +185,18 @@ class PaparazziPlugin : Plugin<Project> {
   }
 
   private fun Project.setupPlatformDataTransform(): Configuration {
-    configurations.getByName("testImplementation").dependencies.add(
-        dependencies.create(project(":paparazzi:paparazzi"))
-    )
+
+    project.repositories.mavenLocal()
+    project.repositories.maven { repo ->
+      repo.setUrl("https://jitpack.io")
+//            repo.metadataSources { sources ->
+//                sources.artifact()
+//            }
+    }
+
+//    configurations.getByName("testImplementation").dependencies.add(
+//        dependencies.create("app.cash.paparazzi:paparazzi:strapp-0.9.3")
+//    )
 
     val unzipConfiguration = configurations.create("unzip")
     unzipConfiguration.attributes.attribute(

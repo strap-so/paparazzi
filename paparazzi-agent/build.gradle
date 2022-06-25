@@ -1,5 +1,26 @@
 apply plugin: 'org.jetbrains.kotlin.jvm'
-apply plugin: 'com.vanniktech.maven.publish'
+//apply plugin: 'com.vanniktech.maven.publish'
+apply plugin: 'maven-publish'
+
+afterEvaluate {
+  publishing {
+    repositories {
+      maven {
+        name = "GitHubPackages"
+        url = uri("https://maven.pkg.github.com/strapp-au/paparazzi")
+        credentials {
+          username = "brenpearson"//findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+          password = "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"//findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+        }
+      }
+    }
+    publications {
+      gpr(MavenPublication) {
+        from(components.java)
+      }
+    }
+  }
+}
 
 dependencies {
   implementation deps.bytebuddy.core
