@@ -15,7 +15,7 @@ buildscript {
     jcodec: '0.2.5',
     moshi: '1.13.0',
     bytebuddy: '1.11.22',
-    releasedPaparazzi: '0.9.3'
+    releasedPaparazzi: 'strapp-0.9.3'
   ]
 
   ext.deps = [
@@ -89,7 +89,8 @@ buildscript {
     classpath 'org.ajoberstar.grgit:grgit-gradle:4.1.0'
     classpath 'com.github.ben-manes:gradle-versions-plugin:0.39.0'
     classpath 'org.jetbrains.dokka:dokka-gradle-plugin:1.5.31'
-    classpath "app.cash.paparazzi:paparazzi-gradle-plugin:${versions.releasedPaparazzi}"
+//    classpath project(':paparazzi-gradle-plugin')
+//    classpath "app.cash.paparazzi:paparazzi-gradle-plugin:${versions.releasedPaparazzi}"
   }
 }
 
@@ -124,33 +125,33 @@ subprojects {
     }
   }
 
-  plugins.withId('com.vanniktech.maven.publish') {
-    publishing {
-      repositories {
-        maven {
-          name = "projectLocalMaven"
-          url = "${rootProject.buildDir}/localMaven"
-        }
-        /**
-         * Want to push to an internal repository for testing?
-         * Set the following properties in ~/.gradle/gradle.properties.
-         *
-         * internalUrl=YOUR_INTERNAL_URL
-         * internalUsername=YOUR_USERNAME
-         * internalPassword=YOUR_PASSWORD
-         */
-        maven {
-          name = "internal"
-          url = providers.gradleProperty("internalUrl").forUseAtConfigurationTime()
-          credentials(PasswordCredentials)
-        }
-      }
-    }
-
-    mavenPublish {
-      releaseSigningEnabled = hasProperty('signingKey')
-    }
-  }
+//  plugins.withId('com.vanniktech.maven.publish') {
+//    publishing {
+//      repositories {
+//        maven {
+//          name = "projectLocalMaven"
+//          url = "${rootProject.buildDir}/localMaven"
+//        }
+//        /**
+//         * Want to push to an internal repository for testing?
+//         * Set the following properties in ~/.gradle/gradle.properties.
+//         *
+//         * internalUrl=YOUR_INTERNAL_URL
+//         * internalUsername=YOUR_USERNAME
+//         * internalPassword=YOUR_PASSWORD
+//         */
+//        maven {
+//          name = "internal"
+//          url = providers.gradleProperty("internalUrl").forUseAtConfigurationTime()
+//          credentials(PasswordCredentials)
+//        }
+//      }
+//    }
+//
+//    mavenPublish {
+//      releaseSigningEnabled = hasProperty('signingKey')
+//    }
+//  }
 
   tasks.register('emptySourcesJar', Jar) {
     // TODO: fetch sources from the corresponding AOSP repos.

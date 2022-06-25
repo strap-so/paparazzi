@@ -17,3 +17,5 @@ generated
 docs/0.x
 docs/changelog.md
 docs/index.md
+
+paparazzi-gradle-plugin/src/test/projects/*
