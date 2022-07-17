@@ -11,7 +11,7 @@ afterEvaluate {
         url = uri("https://maven.pkg.github.com/strapp-au/paparazzi")
         credentials {
           username = "brenpearson"//findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
-          password = "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"//findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+          password = "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"//findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
         }
       }
     }

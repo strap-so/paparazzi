@@ -89,7 +89,7 @@ buildscript {
     classpath 'org.ajoberstar.grgit:grgit-gradle:5.0.0'
     classpath 'com.github.ben-manes:gradle-versions-plugin:0.42.0'
     classpath 'org.jetbrains.dokka:dokka-gradle-plugin:1.6.21'
-    classpath "app.cash.paparazzi:paparazzi-gradle-plugin:${versions.releasedPaparazzi}"
+//    classpath "app.cash.paparazzi:paparazzi-gradle-plugin:${versions.releasedPaparazzi}"
   }
 }
 
@@ -97,7 +97,7 @@ subprojects {
   repositories {
     mavenCentral()
     google()
-    //mavenLocal()
+    mavenLocal()
   }
 
   group = GROUP

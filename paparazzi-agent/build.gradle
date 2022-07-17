@@ -9,8 +9,8 @@ afterEvaluate {
         name = "GitHubPackages"
         url = uri("https://maven.pkg.github.com/strapp-au/paparazzi")
         credentials {
-          username = "brenpearson"//findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
-          password = "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"//findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+          username = 'brenpearson'//getLocalProperty("gpr.user") as String ?: System.getenv("USERNAME")
+          password = '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'//getLocalProperty("gpr.key") as String ?: System.getenv("TOKEN")
         }
       }
     }
@@ -20,6 +20,12 @@ afterEvaluate {
       }
     }
   }
+}
+
+def getLocalProperty(prop) {
+  Properties properties = new Properties()
+  properties.load(new File(project.rootProject.rootDir.absolutePath + '/local.properties').newDataInputStream())
+  return properties.getProperty(prop, '')
 }
 
 dependencies {
